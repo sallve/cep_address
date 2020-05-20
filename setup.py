@@ -7,7 +7,7 @@ setuptools.setup(
     name="cep_address",
     version="0.1",
     author="Sallve",
-    author_email="tenologia@sallve.com",
+    author_email="tecnologia@sallve.com",
     description="A package for getting address data from CEP",
     long_description=long_description,
     long_description_content_type="text/markdown",
