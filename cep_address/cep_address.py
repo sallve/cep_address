@@ -6,8 +6,8 @@ from multiprocessing.queues import Empty
 from re import sub
 from typing import Dict, List
 
-from .services.utils import get_service_error_message
-from .exceptions import InvalidCepLength, ServiceError, ValidationError
+from cep_address.utils import get_service_error_message
+from cep_address.exceptions import InvalidCepLength, ServiceError, ValidationError
 
 CEP_SIZE = 8
 
