@@ -3,8 +3,8 @@ from typing import Dict
 
 from requests.exceptions import HTTPError
 
-from .ufs import UFS
-from .utils import get_service_error_message, requests_retry_session
+from cep_address.ufs import UFS
+from cep_address.utils import get_service_error_message, requests_retry_session
 
 
 def parse_address(cep: str, address_data: Dict) -> Dict:

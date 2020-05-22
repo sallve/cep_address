@@ -6,7 +6,7 @@ from multiprocessing.queues import Empty
 from re import sub
 from typing import Dict, List
 
-from ..services.utils import get_service_error_message
+from .services.utils import get_service_error_message
 from .exceptions import InvalidCepLength, ServiceError, ValidationError
 
 CEP_SIZE = 8
@@ -55,7 +55,7 @@ def validate_cep(cep: str) -> str:
 
 
 @contextmanager
-def run_jobs(jobs):
+def _run_jobs(jobs):
     for j in jobs:
         j.start()
     yield
@@ -83,7 +83,7 @@ def get_address(cep: str, services: List = ["viacep"]) -> Dict:
     for service in _import_services(services):
         jobs.append(Process(target=service.get_address, args=(q, cep)))
 
-    with run_jobs(jobs):
+    with _run_jobs(jobs):
         try:
             service_response = q.get(timeout=10)
         except Empty:
