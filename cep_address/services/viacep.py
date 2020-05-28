@@ -36,10 +36,32 @@ def request(cep: str):
     return response
 
 
-def get_address(queue, cep: str) -> None:
+# def get_address(queue, cep: str) -> None:
+#     try:
+#         response = request(cep)
+#         queue.put(parse_address(cep=cep, address_data=response.json()))
+#     except JSONDecodeError:
+#         queue.put(
+#             get_service_error_message(
+#                 service="viacep", message="The input CEP is invalid"
+#             )
+#         )
+#     except HTTPError:
+#         queue.put(
+#             get_service_error_message(
+#                 service="viacep",
+#                 message=(
+#                     "Sorry, there was an error during the request to the "
+#                     "service, please try again later"
+#                 ),
+#             )
+#         )
+
+
+def get_address(cep: str) -> None:
     try:
         response = request(cep)
-        queue.put(parse_address(cep=cep, address_data=response.json()))
+        return parse_address(cep=cep, address_data=response.json())
     except JSONDecodeError:
         queue.put(
             get_service_error_message(

@@ -3,7 +3,7 @@ from multiprocessing import Process, Queue
 import pytest
 
 from cep_address.services import viacep
-
+breakpoint()
 
 def test_parse_address_valid_cep(
     valid_viacep_response, formatted_valid_cep, valid_viacep_service_return

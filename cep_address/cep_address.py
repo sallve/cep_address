@@ -80,20 +80,22 @@ def get_address(cep: str, services: List = ["viacep"]) -> Dict:
     cep = validate_cep(cep)
     jobs = []
     q = Queue()
+    # for service in _import_services(services):
+    #     jobs.append(Process(target=service.get_address, args=(q, cep)))
     for service in _import_services(services):
-        jobs.append(Process(target=service.get_address, args=(q, cep)))
+        service_response = service.get_address(cep)
 
-    with _run_jobs(jobs):
-        try:
-            service_response = q.get(timeout=10)
-        except Empty:
-            service_response = get_service_error_message(
-                service="ALL",
-                message=(
-                    "Sorry, none of the services were able to get the "
-                    "address you wanted, try again later"
-                ),
-            )
+    # with _run_jobs(jobs):
+    #     try:
+    #         service_response = q.get(timeout=10)
+    #     except Empty:
+    #         service_response = get_service_error_message(
+    #             service="ALL",
+    #             message=(
+    #                 "Sorry, none of the services were able to get the "
+    #                 "address you wanted, try again later"
+    #             ),
+    #         )
 
     if service_response["status"] == "OK":
         return service_response
