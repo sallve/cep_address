@@ -68,7 +68,7 @@ def _import_services(services: List) -> List:
         yield import_module(f"cep_address.services.{service}")
 
 
-def get_address(cep: str, services: List = ["viacep"]) -> Dict:
+def get_address(cep: str, services: List = ["viacep", "correios"]) -> Dict:
     """Returns the address based on the CEP, focusing on the fastest service return.
 
     Args:
@@ -78,28 +78,13 @@ def get_address(cep: str, services: List = ["viacep"]) -> Dict:
     TODO: create an abstract base class so that anyone can create a service
     """
     cep = validate_cep(cep)
-    jobs = []
-    q = Queue()
-    # for service in _import_services(services):
-    #     jobs.append(Process(target=service.get_address, args=(q, cep)))
+
     for service in _import_services(services):
         service_response = service.get_address(cep)
 
-    # with _run_jobs(jobs):
-    #     try:
-    #         service_response = q.get(timeout=10)
-    #     except Empty:
-    #         service_response = get_service_error_message(
-    #             service="ALL",
-    #             message=(
-    #                 "Sorry, none of the services were able to get the "
-    #                 "address you wanted, try again later"
-    #             ),
-    #         )
+        if service_response["status"] == "OK":
+            return service_response
 
-    if service_response["status"] == "OK":
-        return service_response
-    else:
-        raise ServiceError(
-            service=service_response["service"], message=service_response["message"]
-        )
+    raise ServiceError(
+        service=service_response["service"], message=service_response["message"]
+    )

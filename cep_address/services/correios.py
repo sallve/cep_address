@@ -70,10 +70,10 @@ def request(cep: str):
     return validate_response(response)
 
 
-def get_address(queue, cep: str) -> None:
+def get_address(cep: str) -> None:
     try:
         response = request(cep)
-        queue.put(parse_address(address_data=response))
+        return parse_address(address_data=response)
     except HTTPError:
         queue.put(
             get_service_error_message(
