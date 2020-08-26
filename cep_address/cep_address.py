@@ -33,6 +33,9 @@ def _validate_input_type(cep):
 
 
 def validate_cep(cep: str) -> str:
+    """
+    Runs a pipeline of functions to validate the cep.
+    """
     try:
         return reduce(
             lambda value, function: function(value),
@@ -54,22 +57,13 @@ def validate_cep(cep: str) -> str:
         )
 
 
-@contextmanager
-def _run_jobs(jobs):
-    for j in jobs:
-        j.start()
-    yield
-    for p in jobs:
-        p.terminate()
-
-
 def _import_services(services: List) -> List:
     for service in services:
         yield import_module(f"cep_address.services.{service}")
 
 
 def get_address(cep: str, services: List = ["viacep", "correios"]) -> Dict:
-    """Returns the address based on the CEP, focusing on the fastest service return.
+    """Returns the address based on the CEP, in the order of `services`.
 
     Args:
         cep: Código de Endereçamento Postal(zip code)
