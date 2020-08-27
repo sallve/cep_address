@@ -3,12 +3,12 @@ import pytest
 
 @pytest.fixture
 def valid_cep():
-    return "06340-290"
+    return "55645-737"
 
 
 @pytest.fixture
 def formatted_valid_cep():
-    return "06340290"
+    return "55645737"
 
 
 @pytest.fixture
@@ -22,17 +22,22 @@ def formatted_invalid_cep():
 
 
 @pytest.fixture
+def invalid_viacep_response():
+    return {"erro": True}
+
+
+@pytest.fixture
 def valid_viacep_response(valid_cep):
     return {
         "cep": valid_cep,
-        "logradouro": "Rua Silas Lino Ramos",
+        "logradouro": "Rua Alfredo Roberto Barbosa",
         "complemento": "",
-        "bairro": "Parque Santa Teresa",
-        "localidade": "Carapicuíba",
-        "uf": "SP",
-        "unidade": "",
-        "ibge": "3510609",
-        "gia": "2550",
+        "bairro": "Santana",
+        "localidade": "Gravatá",
+        "uf": "PE",
+        "ibge": "2606408",
+        "gia": "",
+        "ddd": "81"
     }
 
 
@@ -40,13 +45,13 @@ def valid_viacep_response(valid_cep):
 def valid_viacep_service_return(formatted_valid_cep):
     return {
         "content": {
-            "state_short": "SP",
+            "state_short": "PE",
             "cep": formatted_valid_cep,
-            "city": "Carapicuíba",
-            "ibge": "3510609",
-            "neighborhood": "Parque Santa Teresa",
-            "street": "Rua Silas Lino Ramos",
-            "state": "São Paulo",
+            "city": "Gravatá",
+            "ibge": "2606408",
+            "neighborhood": "Santana",
+            "street": "Rua Alfredo Roberto Barbosa",
+            "state": "Pernambuco",
         },
         "status": "OK",
         "service": "viacep",
