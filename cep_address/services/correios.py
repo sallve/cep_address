@@ -47,7 +47,7 @@ def validate_response(response: Response) -> Union[Dict, str]:
         cep_message = next(ET.fromstring(response.text).iter("faultstring")).text
         if cep_message == "CEP NAO ENCONTRADO":
             return get_service_error_message(
-                service="correios", message="The input CEP is invalid"
+                service="correios", message="The input CEP was not found"
             )
         elif cep_message == "CEP INVÁLIDO":
             return get_service_error_message(
@@ -88,4 +88,4 @@ def get_address(cep: str) -> Dict:
             ),
         )
     except Exception as e:
-        return get_service_error_message(service="correios", message=e.message)
+        return get_service_error_message(service="correios", message=f"{e.__class__.__name__}: {str(e)}")

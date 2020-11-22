@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="cep_address",
-    version="0.1.1",
+    version="0.1.2",
     author="Sallve",
     author_email="tecnologia@sallve.com",
     description="A package for getting address data from CEP",
